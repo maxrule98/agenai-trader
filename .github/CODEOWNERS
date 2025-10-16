@@ -1,0 +1,5 @@
+* @maxrule @your-handle
+/apps/trader/ @your-handle
+/packages/exec/ @your-handle
+/services/ai-core/ @your-handle
+/apps/ui/ @your-handle
