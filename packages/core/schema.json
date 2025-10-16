@@ -1,0 +1,389 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AI-Quant Core Schemas",
+  "version": "0.1.0",
+  "schemas": {
+    "Bar": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "o": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "h": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "l": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "c": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "v": {
+          "type": "number",
+          "minimum": 0
+        },
+        "exch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tf": {
+          "type": "string",
+          "pattern": "^\\d+[smhd]$"
+        }
+      },
+      "required": [
+        "t",
+        "o",
+        "h",
+        "l",
+        "c",
+        "v",
+        "exch",
+        "symbol",
+        "tf"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "L2Update": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "exch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bids": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "number",
+                "minimum": 0
+              }
+            ]
+          }
+        },
+        "asks": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              {
+                "type": "number",
+                "minimum": 0
+              }
+            ]
+          }
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "t",
+        "exch",
+        "symbol",
+        "bids",
+        "asks",
+        "seq"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Features": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "exch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tf": {
+          "type": "string",
+          "pattern": "^\\d+[smhd]$"
+        },
+        "vals": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "regime": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "t",
+        "exch",
+        "symbol",
+        "tf",
+        "vals"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "AlphaSignal": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "t": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tf": {
+          "type": "string",
+          "pattern": "^\\d+[smhd]$"
+        },
+        "score": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "conf": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "horizon_sec": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "explain": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "t",
+        "symbol",
+        "exch",
+        "tf",
+        "score",
+        "conf",
+        "horizon_sec"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Action": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "buy",
+            "sell"
+          ]
+        },
+        "size": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "entry": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "bracket": {
+          "type": "object",
+          "properties": {
+            "tp": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "sl": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "trail": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "t",
+        "symbol",
+        "exch",
+        "side",
+        "size"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "RiskVerdict": {
+      "type": "object",
+      "properties": {
+        "allow": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "adjusted": {
+          "type": "object",
+          "properties": {
+            "t": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "symbol": {
+              "type": "string",
+              "minLength": 1
+            },
+            "exch": {
+              "type": "string",
+              "minLength": 1
+            },
+            "side": {
+              "type": "string",
+              "enum": [
+                "buy",
+                "sell"
+              ]
+            },
+            "size": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "entry": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "bracket": {
+              "type": "object",
+              "properties": {
+                "tp": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "sl": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "trail": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "t",
+            "symbol",
+            "exch",
+            "side",
+            "size"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "allow"
+      ],
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Side": {
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ],
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "Bracket": {
+      "type": "object",
+      "properties": {
+        "tp": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sl": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "trail": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "$schema": "http://json-schema.org/draft-07/schema#"
+    }
+  }
+}
