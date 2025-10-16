@@ -15,7 +15,7 @@
  * - RNG seed is stored in session metadata for replay
  * - Events are emitted in strict chronological order
  */
-import seedrandom from 'seedrandom';
+import seedrandom from "seedrandom";
 // ============================================================================
 // Replay Engine
 // ============================================================================
@@ -144,7 +144,7 @@ export class ReplayEngine {
      */
     async emitEvent(event) {
         const specificHandlers = this.handlers.get(event.type) ?? [];
-        const wildcardHandlers = this.handlers.get('*') ?? [];
+        const wildcardHandlers = this.handlers.get("*") ?? [];
         const allHandlers = [...specificHandlers, ...wildcardHandlers];
         for (const handler of allHandlers) {
             await handler(event);
@@ -158,7 +158,7 @@ export class ReplayEngine {
  * Parse JSONL session log into replay config
  */
 export function parseSessionLog(jsonl, sessionId, seed) {
-    const lines = jsonl.trim().split('\n');
+    const lines = jsonl.trim().split("\n");
     const events = [];
     let minTs = Infinity;
     let maxTs = -Infinity;
@@ -224,5 +224,5 @@ export function compareReplays(expected, actual) {
  * Serialize replay events to JSONL for golden file storage
  */
 export function serializeEvents(events) {
-    return events.map((e) => JSON.stringify(e)).join('\n');
+    return events.map((e) => JSON.stringify(e)).join("\n");
 }

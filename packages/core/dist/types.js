@@ -11,14 +11,15 @@
  * - AlphaSignal scores are [-1..1], confidence [0..1]
  * - Action metadata is flexible JSON for strategy context
  */
-import { z } from 'zod';
+import { z } from "zod";
 // ============================================================================
 // Market Data
 // ============================================================================
 /**
  * OHLCV Bar - standardized across exchanges
  */
-export const BarSchema = z.object({
+export const BarSchema = z
+    .object({
     /** Unix timestamp (ms) of bar open */
     t: z.number().int().positive(),
     /** Open price */
@@ -37,11 +38,13 @@ export const BarSchema = z.object({
     symbol: z.string().min(1),
     /** Timeframe (e.g., '1m', '5m', '1h', '1d') */
     tf: z.string().regex(/^\d+[smhd]$/),
-}).strict();
+})
+    .strict();
 /**
  * Level 2 Order Book Update
  */
-export const L2UpdateSchema = z.object({
+export const L2UpdateSchema = z
+    .object({
     /** Unix timestamp (ms) of update */
     t: z.number().int().positive(),
     /** Exchange identifier */
@@ -54,14 +57,16 @@ export const L2UpdateSchema = z.object({
     asks: z.array(z.tuple([z.number().positive(), z.number().nonnegative()])),
     /** Sequence number for ordering updates */
     seq: z.number().int().nonnegative(),
-}).strict();
+})
+    .strict();
 // ============================================================================
 // Features
 // ============================================================================
 /**
  * Feature vector computed from market data
  */
-export const FeaturesSchema = z.object({
+export const FeaturesSchema = z
+    .object({
     /** Unix timestamp (ms) */
     t: z.number().int().positive(),
     /** Exchange identifier */
@@ -74,14 +79,16 @@ export const FeaturesSchema = z.object({
     vals: z.record(z.string(), z.number()),
     /** Optional regime label (e.g., 'trending', 'ranging', 'volatile') */
     regime: z.string().optional(),
-}).strict();
+})
+    .strict();
 // ============================================================================
 // Alpha & Strategy
 // ============================================================================
 /**
  * AlphaSignal - directional prediction from a strategy
  */
-export const AlphaSignalSchema = z.object({
+export const AlphaSignalSchema = z
+    .object({
     /** Unique signal ID (for tracking and replay) */
     id: z.string().min(1),
     /** Unix timestamp (ms) */
@@ -100,29 +107,33 @@ export const AlphaSignalSchema = z.object({
     horizon_sec: z.number().int().positive(),
     /** Optional explanation for transparency */
     explain: z.string().optional(),
-}).strict();
+})
+    .strict();
 // ============================================================================
 // Trading Actions
 // ============================================================================
 /**
  * Side of trade
  */
-export const SideSchema = z.enum(['buy', 'sell']);
+export const SideSchema = z.enum(["buy", "sell"]);
 /**
  * Bracket order configuration (take-profit and stop-loss)
  */
-export const BracketSchema = z.object({
+export const BracketSchema = z
+    .object({
     /** Take-profit price */
     tp: z.number().positive().optional(),
     /** Stop-loss price */
     sl: z.number().positive().optional(),
     /** Trailing stop distance (in price units or percentage) */
     trail: z.number().positive().optional(),
-}).strict();
+})
+    .strict();
 /**
  * Action - intended trade action from policy layer
  */
-export const ActionSchema = z.object({
+export const ActionSchema = z
+    .object({
     /** Unix timestamp (ms) */
     t: z.number().int().positive(),
     /** Symbol/pair */
@@ -139,21 +150,24 @@ export const ActionSchema = z.object({
     bracket: BracketSchema.optional(),
     /** Arbitrary metadata (strategy ID, alpha signal ID, etc.) */
     metadata: z.record(z.string(), z.unknown()).optional(),
-}).strict();
+})
+    .strict();
 // ============================================================================
 // Risk Management
 // ============================================================================
 /**
  * RiskVerdict - result of risk check
  */
-export const RiskVerdictSchema = z.object({
+export const RiskVerdictSchema = z
+    .object({
     /** Whether action is allowed */
     allow: z.boolean(),
     /** Reason if rejected or adjusted */
     reason: z.string().optional(),
     /** Adjusted action if risk system modified it */
     adjusted: ActionSchema.optional(),
-}).strict();
+})
+    .strict();
 // ============================================================================
 // Exports
 // ============================================================================

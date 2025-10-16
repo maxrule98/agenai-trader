@@ -18,7 +18,7 @@
 /**
  * Event types that can be replayed
  */
-export type ReplayEventType = 'bar' | 'features' | 'alpha_signal' | 'action' | 'risk_verdict' | 'order' | 'fill';
+export type ReplayEventType = "bar" | "features" | "alpha_signal" | "action" | "risk_verdict" | "order" | "fill";
 /**
  * Replay event wrapper
  */
@@ -77,11 +77,11 @@ export declare class ReplayEngine {
     /**
      * Register an event handler
      */
-    on(eventType: ReplayEventType | '*', handler: ReplayHandler): void;
+    on(eventType: ReplayEventType | "*", handler: ReplayHandler): void;
     /**
      * Remove an event handler
      */
-    off(eventType: ReplayEventType | '*', handler: ReplayHandler): void;
+    off(eventType: ReplayEventType | "*", handler: ReplayHandler): void;
     /**
      * Get next random number (deterministic)
      */

@@ -55,6 +55,41 @@ importers:
         specifier: ^2.1.3
         version: 2.1.9(@types/node@22.18.10)
 
+  packages/features:
+    dependencies:
+      '@ai-quant/core':
+        specifier: workspace:*
+        version: link:../core
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.3
+        version: 2.1.9(@types/node@22.18.10)
+
+  packages/plugins:
+    dependencies:
+      '@ai-quant/core':
+        specifier: workspace:*
+        version: link:../core
+      '@ai-quant/features':
+        specifier: workspace:*
+        version: link:../features
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.3
+        version: 2.1.9(@types/node@22.18.10)
+
   packages/sim:
     dependencies:
       '@ai-quant/core':

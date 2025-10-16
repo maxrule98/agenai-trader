@@ -11,7 +11,7 @@
  * - AlphaSignal scores are [-1..1], confidence [0..1]
  * - Action metadata is flexible JSON for strategy context
  */
-import { z } from 'zod';
+import { z } from "zod";
 /**
  * OHLCV Bar - standardized across exchanges
  */
